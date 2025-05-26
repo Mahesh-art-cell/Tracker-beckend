@@ -75,3 +75,33 @@ const server = async () => {
 };
 
 server();
+
+
+
+
+// require('dotenv').config();
+// const express = require("express");
+// const cors = require("cors");
+// const connectDB = require('./db/db');
+
+// const authRoutes = require("./routes/auth"); // if separated
+// const apiRoutes = require("./routes/api");   // all in one
+
+// const app = express();
+// const PORT = process.env.PORT || 5000;
+
+// app.use(cors());
+// app.use(express.json());
+
+// connectDB(); // MongoDB connection
+
+// // Routes
+// app.use("/api/v1", apiRoutes);
+
+// // Default route
+// app.get("/", (req, res) => {
+//   res.send("🚀 Expense Tracker API");
+// });
+
+// // Start server
+// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
