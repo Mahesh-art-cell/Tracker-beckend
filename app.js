@@ -9,7 +9,9 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: "https://tracker-fontend.vercel.app/"
+}));
 
 // ADD THIS: Root route to fix "Cannot GET /" error
 app.get('/', (req, res) => {
