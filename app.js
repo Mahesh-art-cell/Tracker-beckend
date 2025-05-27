@@ -9,9 +9,27 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(express.json());
+// app.use(cors({
+//     origin: "https://tracker-fontend.vercel.app"
+// }));
+
+const allowedOrigins = [
+    'https://tracker-fontend.vercel.app',
+    'http://localhost:3000'
+];
+
 app.use(cors({
-    origin: "https://tracker-fontend.vercel.app"
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
 }));
+
 
 // ADD THIS: Root route to fix "Cannot GET /" error
 app.get('/', (req, res) => {
@@ -78,32 +96,3 @@ const server = async () => {
 
 server();
 
-
-
-
-// require('dotenv').config();
-// const express = require("express");
-// const cors = require("cors");
-// const connectDB = require('./db/db');
-
-// const authRoutes = require("./routes/auth"); // if separated
-// const apiRoutes = require("./routes/api");   // all in one
-
-// const app = express();
-// const PORT = process.env.PORT || 5000;
-
-// app.use(cors());
-// app.use(express.json());
-
-// connectDB(); // MongoDB connection
-
-// // Routes
-// app.use("/api/v1", apiRoutes);
-
-// // Default route
-// app.get("/", (req, res) => {
-//   res.send("🚀 Expense Tracker API");
-// });
-
-// // Start server
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
