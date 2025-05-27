@@ -1,6 +1,37 @@
 const IncomeSchema = require("../models/IncomeModel");
 
 // @desc    Add a new income
+// exports.addIncome = async (req, res) => {
+//     const { title, amount, category, description, date } = req.body;
+
+//     try {
+//         // Basic validation
+//         if (!title || !category || !description || !date || typeof amount !== 'number' || amount <= 0) {
+//             return res.status(400).json({ message: 'All fields are required and amount must be a positive number' });
+//         }
+
+//         // Create new income
+//         const income = new IncomeSchema({
+//             title,
+//             amount,
+//             category,
+//             description,
+//             date,
+//             user: req.user.id // user ID from authMiddleware
+//         });
+
+//         await income.save();
+
+//         return res.status(201).json({ 
+//             message: '✅ Income added successfully', 
+//             data: income 
+//         });
+//     } catch (error) {
+//         console.error('Add Income Error:', error);
+//         res.status(500).json({ message: 'Server error', error: error.message });
+//     }
+// };
+
 exports.addIncome = async (req, res) => {
     const { title, amount, category, description, date } = req.body;
 
@@ -17,7 +48,7 @@ exports.addIncome = async (req, res) => {
             category,
             description,
             date,
-            user: req.user.id // user ID from authMiddleware
+            user: req.user.id  // ✅ Pulled from middleware
         });
 
         await income.save();
@@ -31,6 +62,8 @@ exports.addIncome = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
+
+
 
 // @desc    Get all incomes for logged-in user
 exports.getIncomes = async (req, res) => {
