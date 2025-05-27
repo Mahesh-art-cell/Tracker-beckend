@@ -15,7 +15,7 @@ app.use(express.json());
 
 
 const allowedOrigins = [
-    'https://tracker-fontend.vercel.app',
+    // 'https://tracker-fontend.vercel.app',
     'http://localhost:3000'
 ];
 
@@ -71,7 +71,6 @@ app.use('*', (req, res) => {
         suggestion: 'Check the root endpoint / for available routes'
     });
 });
-
 // ADD THIS: Global error handler
 app.use((err, req, res, next) => {
     console.error('❌ Server Error:', err.stack);
