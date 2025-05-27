@@ -13,6 +13,7 @@ app.use(express.json());
 //     origin: "https://tracker-fontend.vercel.app"
 // }));
 
+
 const allowedOrigins = [
     'https://tracker-fontend.vercel.app',
     'http://localhost:3000'
@@ -20,15 +21,16 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps or curl)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log('❌ Blocked by CORS:', origin); // <- Debugging
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true
 }));
+
 
 
 // ADD THIS: Root route to fix "Cannot GET /" error
