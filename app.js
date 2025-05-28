@@ -16,6 +16,7 @@ app.use(express.json());
 
 const allowedOrigins = [
     // 'https://tracker-fontend.vercel.app',
+    'https://tracks-frontend.vercel.app/',
     'http://localhost:3000'
 ];
 
