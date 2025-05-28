@@ -9,14 +9,12 @@ const PORT = process.env.PORT || 5000;
 
 // Middlewares
 app.use(express.json());
-// app.use(cors({
-//     origin: "https://tracker-fontend.vercel.app"
-// }));
+
 
 
 const allowedOrigins = [
     // 'https://tracker-fontend.vercel.app',
-    'https://tracks-frontend.vercel.app/',
+    'https://tracks-frontend.vercel.app',
     'http://localhost:3000'
 ];
 
