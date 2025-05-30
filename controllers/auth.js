@@ -58,43 +58,63 @@ const registerUser = async (req, res) => {
 
 
 // Login a user and return token
+// const loginUser = async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     console.log('🔐 Login request received:', email); // Step 1
+
+//     const formattedEmail = email.toLowerCase();
+//     console.log('📬 Searching for user with email:', formattedEmail); // Step 2
+
+//     const user = await User.findOne({ email: formattedEmail });
+
+//     if (!user) {
+//       console.log('❌ User not found in DB');
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     console.log('✅ User found:', user.username); // Step 3
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       console.log('❌ Password does not match');
+//       return res.status(401).json({ message: 'Invalid credentials' });
+//     }
+
+//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+//       expiresIn: '1h',
+//     });
+
+//     console.log('✅ Token generated successfully');
+//     res.json({ token });
+//   } catch (err) {
+//     console.error('💥 Login error:', err);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    console.log('🔐 Login request received:', email); // Step 1
-
-    const formattedEmail = email.toLowerCase();
-    console.log('📬 Searching for user with email:', formattedEmail); // Step 2
-
-    const user = await User.findOne({ email: formattedEmail });
-
+    const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      console.log('❌ User not found in DB');
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ success: false, message: 'User not found. Please sign up first.' });
     }
-
-    console.log('✅ User found:', user.username); // Step 3
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      console.log('❌ Password does not match');
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    console.log('✅ Token generated successfully');
-    res.json({ token });
+    res.json({ success: true, token });
   } catch (err) {
-    console.error('💥 Login error:', err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ success: false, message: 'Server error during login' });
   }
 };
-
-
 
 // Get user profile (after auth)
 const getUserProfile = async (req, res) => {
